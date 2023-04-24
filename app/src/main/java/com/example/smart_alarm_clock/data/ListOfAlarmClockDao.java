@@ -1,5 +1,6 @@
 package com.example.smart_alarm_clock.data;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -16,8 +17,13 @@ public interface ListOfAlarmClockDao {
     @Query("SELECT * FROM ListOfAlarmClock")
     List<ListOfAlarmClock> getAll();
 
+    @Query("SELECT * FROM ListOfAlarmClock")
+    LiveData<List<ListOfAlarmClock>> getAllLiveData();
+
     @Query("SELECT * FROM ListOfAlarmClock WHERE alarmClock_ID = :alarmClock_ID")
     ListOfAlarmClock getById(int alarmClock_ID);
+
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(ListOfAlarmClock listOfAlarmClock);

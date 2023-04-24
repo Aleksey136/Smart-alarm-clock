@@ -71,4 +71,25 @@ public class ListOfLateness implements Parcelable {
         dest.writeInt(timeLatenessHour);
         dest.writeInt(timeLatenessMinute);
     }
+
+    public class InnerListOfLateness{
+        @ColumnInfo(name = "textLateness")
+        public String textLateness;
+
+        @ColumnInfo(name = "timeLatenessHour")
+        public int timeLatenessHour;
+
+        @ColumnInfo(name = "timeLatenessMinute")
+        public int timeLatenessMinute;
+
+        public InnerListOfLateness(){
+
+        }
+
+        public InnerListOfLateness(ListOfLateness listOfLateness){
+            this.textLateness=listOfLateness.textLateness;
+            this.timeLatenessHour=listOfLateness.timeLatenessHour;
+            this.timeLatenessMinute=listOfLateness.timeLatenessMinute;
+        }
+    }
 }

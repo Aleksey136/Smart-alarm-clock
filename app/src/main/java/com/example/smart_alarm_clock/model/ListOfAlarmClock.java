@@ -24,6 +24,9 @@ public class ListOfAlarmClock implements Parcelable {
     @ColumnInfo(name = "timeAlarmClockMinute")
     public int timeAlarmClockMinute;
 
+    @ColumnInfo(name = "activeAlarmClock")
+    public boolean activeAlarmClock;
+
     public ListOfAlarmClock() {
     }
 
@@ -32,6 +35,7 @@ public class ListOfAlarmClock implements Parcelable {
         textAlarmClock = in.readString();
         timeAlarmClockHour = in.readInt();
         timeAlarmClockMinute = in.readInt();
+        activeAlarmClock = in.readByte() != 0;
     }
 
     public static final Creator<ListOfAlarmClock> CREATOR = new Creator<ListOfAlarmClock>() {
@@ -51,12 +55,12 @@ public class ListOfAlarmClock implements Parcelable {
         if (this == o) return true;
         if (!(o instanceof ListOfAlarmClock)) return false;
         ListOfAlarmClock that = (ListOfAlarmClock) o;
-        return alarmClock_ID == that.alarmClock_ID && timeAlarmClockHour == that.timeAlarmClockHour && timeAlarmClockMinute == that.timeAlarmClockMinute && Objects.equals(textAlarmClock, that.textAlarmClock);
+        return alarmClock_ID == that.alarmClock_ID && timeAlarmClockHour == that.timeAlarmClockHour && timeAlarmClockMinute == that.timeAlarmClockMinute && activeAlarmClock == that.activeAlarmClock && Objects.equals(textAlarmClock, that.textAlarmClock);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(alarmClock_ID, textAlarmClock, timeAlarmClockHour, timeAlarmClockMinute);
+        return Objects.hash(alarmClock_ID, textAlarmClock, timeAlarmClockHour, timeAlarmClockMinute, activeAlarmClock);
     }
 
     @Override
@@ -70,5 +74,31 @@ public class ListOfAlarmClock implements Parcelable {
         dest.writeString(textAlarmClock);
         dest.writeInt(timeAlarmClockHour);
         dest.writeInt(timeAlarmClockMinute);
+        dest.writeByte((byte) (activeAlarmClock ? 1 : 0));
+    }
+
+    public static class InnerListOfAlarmClock{
+        @ColumnInfo(name = "textAlarmClock")
+        public String textAlarmClock;
+
+        @ColumnInfo(name = "timeAlarmClockHour")
+        public int timeAlarmClockHour;
+
+        @ColumnInfo(name = "timeAlarmClockMinute")
+        public int timeAlarmClockMinute;
+
+        @ColumnInfo(name = "activeAlarmClock")
+        public boolean activeAlarmClock;
+
+        public InnerListOfAlarmClock() {
+
+        }
+
+        public InnerListOfAlarmClock(String textAlarmClock, int timeAlarmClockHour, int timeAlarmClockMinute, boolean activeAlarmClock) {
+            this.textAlarmClock = textAlarmClock;
+            this.timeAlarmClockHour = timeAlarmClockHour;
+            this.timeAlarmClockMinute = timeAlarmClockMinute;
+            this.activeAlarmClock = activeAlarmClock;
+        }
     }
 }

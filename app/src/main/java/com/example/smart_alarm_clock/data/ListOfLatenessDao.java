@@ -19,9 +19,6 @@ public interface ListOfLatenessDao {
     @Query("SELECT * FROM ListOfLateness WHERE lateness_ID = :lateness_ID")
     ListOfLateness getById(int lateness_ID);
 
-//    @Query("SELECT * FROM ListOfLateness ORDER BY ")
-//    List<ListOfLateness> getByTime();
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(ListOfLateness listOfLateness);
 

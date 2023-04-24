@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.smart_alarm_clock.screens.mainFragment.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_listOfLatenessFragment"
+            app:destination="@id/listOfLatenessFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_editListOfAlarmClockFragment"
+            app:destination="@id/editListOfAlarmClockFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listOfLatenessFragment"
+        android:name="com.example.smart_alarm_clock.screens.listOfLatenessFragment.ListOfLatenessFragment"
+        android:label="ListOfLatenessFragment"
+        tools:layout="@layout/fragment_list_of_lateness">
+        <action
+            android:id="@+id/action_listOfLatenessFragment_to_editListOfLatenessFragment"
+            app:destination="@id/editListOfLatenessFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editListOfAlarmClockFragment"
+        android:name="com.example.smart_alarm_clock.screens.editListOfAlarmClockFragment.EditListOfAlarmClockFragment"
+        android:label="EditListOfAlarmClockFragment"
+        tools:layout="@layout/fragment_edit_list_alarm_clock" />
+    <fragment
+        android:id="@+id/editListOfLatenessFragment"
+        android:name="com.example.smart_alarm_clock.screens.editListOfLatenessFragment.EditListOfLatenessFragment"
+        android:label="EditListOfLatenessFragment"
+        tools:layout="@layout/fragment_edit_list_of_lateness" />
+    <fragment
+        android:id="@+id/activeAlarmClockFragment"
+        android:name="com.example.smart_alarm_clock.screens.activeAlarmClockFragment.ActiveAlarmClockFragment"
+        android:label="ActiveAlarmClockFragment"
+        tools:layout="@layout/fragment_active_alarm_clock" />
+</navigation>
