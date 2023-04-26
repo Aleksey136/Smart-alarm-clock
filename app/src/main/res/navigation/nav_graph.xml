@@ -30,12 +30,20 @@
         android:id="@+id/editListOfAlarmClockFragment"
         android:name="com.example.smart_alarm_clock.screens.editListOfAlarmClockFragment.EditListOfAlarmClockFragment"
         android:label="EditListOfAlarmClockFragment"
-        tools:layout="@layout/fragment_edit_list_alarm_clock" />
+        tools:layout="@layout/fragment_edit_list_alarm_clock" >
+        <argument
+            android:name="alarmClockId"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/editListOfLatenessFragment"
         android:name="com.example.smart_alarm_clock.screens.editListOfLatenessFragment.EditListOfLatenessFragment"
         android:label="EditListOfLatenessFragment"
-        tools:layout="@layout/fragment_edit_list_of_lateness" />
+        tools:layout="@layout/fragment_edit_list_of_lateness" >
+        <argument
+            android:name="latenessId"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/activeAlarmClockFragment"
         android:name="com.example.smart_alarm_clock.screens.activeAlarmClockFragment.ActiveAlarmClockFragment"

@@ -10,7 +10,7 @@ import com.example.smart_alarm_clock.data.ListOfLatenessDao;
 
 public class App extends Application {
 
-private AppDatabase database;
+    private AppDatabase database;
     private ListOfAlarmClockDao listOfAlarmClockDao;
     private ListOfLatenessDao listOfLatenessDao;
 
@@ -23,6 +23,8 @@ private AppDatabase database;
     @Override
     public void onCreate() {
         super.onCreate();
+
+        instance = this;
 
         database = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-db")

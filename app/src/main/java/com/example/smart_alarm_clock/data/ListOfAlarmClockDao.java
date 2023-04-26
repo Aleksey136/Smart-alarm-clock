@@ -23,8 +23,6 @@ public interface ListOfAlarmClockDao {
     @Query("SELECT * FROM ListOfAlarmClock WHERE alarmClock_ID = :alarmClock_ID")
     ListOfAlarmClock getById(int alarmClock_ID);
 
-
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(ListOfAlarmClock listOfAlarmClock);
 

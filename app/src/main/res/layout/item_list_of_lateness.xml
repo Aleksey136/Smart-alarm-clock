@@ -8,7 +8,7 @@
     android:gravity="center">
 
     <TextView
-        android:id="@+id/AlarmClock_time"
+        android:id="@+id/Lateness_time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -16,14 +16,4 @@
         android:minHeight="64dp"
         android:gravity="center_vertical">
     </TextView>
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/SwitchActiveAlarmClock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingRight="20dp"
-        android:checked="false"
-        >
-    </androidx.appcompat.widget.SwitchCompat>
-
 </LinearLayout>

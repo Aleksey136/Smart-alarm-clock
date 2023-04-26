@@ -8,8 +8,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Objects;
-
 @Entity
 public class ListOfLateness implements Parcelable {
     @PrimaryKey(autoGenerate = true)
@@ -24,6 +22,9 @@ public class ListOfLateness implements Parcelable {
     @ColumnInfo(name = "timeLatenessMinute")
     public int timeLatenessMinute;
 
+    @ColumnInfo(name = "technologyLateness")
+    public boolean technologyLateness;
+
     public ListOfLateness() {
     }
 
@@ -32,6 +33,7 @@ public class ListOfLateness implements Parcelable {
         textLateness = in.readString();
         timeLatenessHour = in.readInt();
         timeLatenessMinute = in.readInt();
+        technologyLateness = in.readByte() != 0;
     }
 
     public static final Creator<ListOfLateness> CREATOR = new Creator<ListOfLateness>() {
@@ -50,13 +52,24 @@ public class ListOfLateness implements Parcelable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ListOfLateness)) return false;
+
         ListOfLateness that = (ListOfLateness) o;
-        return lateness_ID == that.lateness_ID && timeLatenessHour == that.timeLatenessHour && timeLatenessMinute == that.timeLatenessMinute && Objects.equals(textLateness, that.textLateness);
+
+        if (lateness_ID != that.lateness_ID) return false;
+        if (timeLatenessHour != that.timeLatenessHour) return false;
+        if (timeLatenessMinute != that.timeLatenessMinute) return false;
+        if (technologyLateness != that.technologyLateness) return false;
+        return textLateness != null ? textLateness.equals(that.textLateness) : that.textLateness == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(lateness_ID, textLateness, timeLatenessHour, timeLatenessMinute);
+        int result = lateness_ID;
+        result = 31 * result + (textLateness != null ? textLateness.hashCode() : 0);
+        result = 31 * result + timeLatenessHour;
+        result = 31 * result + timeLatenessMinute;
+        result = 31 * result + (technologyLateness ? 1 : 0);
+        return result;
     }
 
     @Override
@@ -70,26 +83,6 @@ public class ListOfLateness implements Parcelable {
         dest.writeString(textLateness);
         dest.writeInt(timeLatenessHour);
         dest.writeInt(timeLatenessMinute);
-    }
-
-    public class InnerListOfLateness{
-        @ColumnInfo(name = "textLateness")
-        public String textLateness;
-
-        @ColumnInfo(name = "timeLatenessHour")
-        public int timeLatenessHour;
-
-        @ColumnInfo(name = "timeLatenessMinute")
-        public int timeLatenessMinute;
-
-        public InnerListOfLateness(){
-
-        }
-
-        public InnerListOfLateness(ListOfLateness listOfLateness){
-            this.textLateness=listOfLateness.textLateness;
-            this.timeLatenessHour=listOfLateness.timeLatenessHour;
-            this.timeLatenessMinute=listOfLateness.timeLatenessMinute;
-        }
+        dest.writeByte((byte) (technologyLateness ? 1 : 0));
     }
 }

@@ -1,5 +1,6 @@
 package com.example.smart_alarm_clock.data;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -15,6 +16,9 @@ import java.util.List;
 public interface ListOfLatenessDao {
     @Query("SELECT * FROM ListOfLateness")
     List<ListOfLateness> getAll();
+
+    @Query("SELECT * FROM ListOfLateness")
+    LiveData<List<ListOfLateness>> getAllLiveData();
 
     @Query("SELECT * FROM ListOfLateness WHERE lateness_ID = :lateness_ID")
     ListOfLateness getById(int lateness_ID);

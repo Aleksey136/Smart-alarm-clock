@@ -8,42 +8,40 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textOutAlarmClock"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/TextOutAlarmClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Вставайте!"
         android:textSize="45dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.300" />
 
     <Button
-        android:id="@+id/disableAlarmClock"
+        android:id="@+id/DisableAlarmClock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Отключить"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ChangeTimeAlarmClock"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.200"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.732" />
+        app:layout_constraintTop_toBottomOf="@+id/TextOutAlarmClock" />
 
     <Button
-        android:id="@+id/changeTimeAlarmClock"
-        android:layout_width="128dp"
-        android:layout_height="69dp"
-        android:layout_marginStart="56dp"
-        android:text="Отложить на 1 минуту"
+        android:id="@+id/ChangeTimeAlarmClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="68dp"
+        android:minWidth="128dp"
+        android:minHeight="69dp"
+        android:text="Отложить\nна 1 минуту"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/disableAlarmClock"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.738" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextOutAlarmClock"
+        app:layout_constraintVertical_bias="0.700" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

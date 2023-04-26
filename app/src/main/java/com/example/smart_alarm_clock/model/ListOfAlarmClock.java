@@ -8,8 +8,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Objects;
-
 @Entity
 public class ListOfAlarmClock implements Parcelable {
     @PrimaryKey(autoGenerate = true)
@@ -27,6 +25,9 @@ public class ListOfAlarmClock implements Parcelable {
     @ColumnInfo(name = "activeAlarmClock")
     public boolean activeAlarmClock;
 
+    @ColumnInfo(name = "activeRepeatAlarmClock")
+    public boolean activeRepeatAlarmClock;
+
     public ListOfAlarmClock() {
     }
 
@@ -36,6 +37,7 @@ public class ListOfAlarmClock implements Parcelable {
         timeAlarmClockHour = in.readInt();
         timeAlarmClockMinute = in.readInt();
         activeAlarmClock = in.readByte() != 0;
+        activeRepeatAlarmClock = in.readByte() != 0;
     }
 
     public static final Creator<ListOfAlarmClock> CREATOR = new Creator<ListOfAlarmClock>() {
@@ -54,13 +56,26 @@ public class ListOfAlarmClock implements Parcelable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ListOfAlarmClock)) return false;
+
         ListOfAlarmClock that = (ListOfAlarmClock) o;
-        return alarmClock_ID == that.alarmClock_ID && timeAlarmClockHour == that.timeAlarmClockHour && timeAlarmClockMinute == that.timeAlarmClockMinute && activeAlarmClock == that.activeAlarmClock && Objects.equals(textAlarmClock, that.textAlarmClock);
+
+        if (alarmClock_ID != that.alarmClock_ID) return false;
+        if (timeAlarmClockHour != that.timeAlarmClockHour) return false;
+        if (timeAlarmClockMinute != that.timeAlarmClockMinute) return false;
+        if (activeAlarmClock != that.activeAlarmClock) return false;
+        if (activeRepeatAlarmClock != that.activeRepeatAlarmClock) return false;
+        return textAlarmClock != null ? textAlarmClock.equals(that.textAlarmClock) : that.textAlarmClock == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(alarmClock_ID, textAlarmClock, timeAlarmClockHour, timeAlarmClockMinute, activeAlarmClock);
+        int result = alarmClock_ID;
+        result = 31 * result + (textAlarmClock != null ? textAlarmClock.hashCode() : 0);
+        result = 31 * result + timeAlarmClockHour;
+        result = 31 * result + timeAlarmClockMinute;
+        result = 31 * result + (activeAlarmClock ? 1 : 0);
+        result = 31 * result + (activeRepeatAlarmClock ? 1 : 0);
+        return result;
     }
 
     @Override
@@ -75,30 +90,6 @@ public class ListOfAlarmClock implements Parcelable {
         dest.writeInt(timeAlarmClockHour);
         dest.writeInt(timeAlarmClockMinute);
         dest.writeByte((byte) (activeAlarmClock ? 1 : 0));
-    }
-
-    public static class InnerListOfAlarmClock{
-        @ColumnInfo(name = "textAlarmClock")
-        public String textAlarmClock;
-
-        @ColumnInfo(name = "timeAlarmClockHour")
-        public int timeAlarmClockHour;
-
-        @ColumnInfo(name = "timeAlarmClockMinute")
-        public int timeAlarmClockMinute;
-
-        @ColumnInfo(name = "activeAlarmClock")
-        public boolean activeAlarmClock;
-
-        public InnerListOfAlarmClock() {
-
-        }
-
-        public InnerListOfAlarmClock(String textAlarmClock, int timeAlarmClockHour, int timeAlarmClockMinute, boolean activeAlarmClock) {
-            this.textAlarmClock = textAlarmClock;
-            this.timeAlarmClockHour = timeAlarmClockHour;
-            this.timeAlarmClockMinute = timeAlarmClockMinute;
-            this.activeAlarmClock = activeAlarmClock;
-        }
+        dest.writeByte((byte) (activeRepeatAlarmClock ? 1 : 0));
     }
 }

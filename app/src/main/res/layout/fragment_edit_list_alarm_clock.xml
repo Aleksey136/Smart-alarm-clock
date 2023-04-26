@@ -8,12 +8,11 @@
         tools:context=".screens.editListOfAlarmClockFragment.EditListOfAlarmClockFragment">
 
         <EditText
-            android:id="@+id/descriptionAlarmClock"
+            android:id="@+id/DescriptionAlarmClock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top"
             android:hint="Введите описание"
-            android:minHeight="200dp"
             android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -29,12 +28,10 @@
             android:layout_margin="35dp"
             android:contentDescription="@string/app_name"
             android:text="Сохранить"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/ButtonDeleteAlarmClock"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionAlarmClock"
-            app:layout_constraintVertical_bias="0.17" />
+            app:layout_constraintTop_toBottomOf="@+id/DescriptionAlarmClock" />
 
         <Button
             android:id="@+id/ButtonEditListOfAlarmClock"
@@ -44,10 +41,10 @@
             android:background="#00000000"
             android:contentDescription="@string/app_name"
             android:gravity="center"
-            android:text="12:00"
+            android:text=""
             android:textColor="@color/gray"
             android:textSize="45dp"
-            app:layout_constraintBottom_toTopOf="@+id/descriptionAlarmClock"
+            app:layout_constraintBottom_toTopOf="@+id/DescriptionAlarmClock"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -55,7 +52,7 @@
             app:strokeWidth="2dp" />
 
         <Button
-            android:id="@+id/ButtonToListOfAlarmClock"
+            android:id="@+id/ButtonDeleteAlarmClock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
@@ -65,8 +62,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ButtonSaveEditAlarmClock"
-            app:layout_constraintVertical_bias="0.256" />
+            app:layout_constraintTop_toBottomOf="@+id/DescriptionAlarmClock" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

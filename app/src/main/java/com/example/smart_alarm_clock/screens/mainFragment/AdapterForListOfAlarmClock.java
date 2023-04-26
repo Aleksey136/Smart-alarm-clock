@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,22 +11,28 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 
-import com.example.smart_alarm_clock.App;
 import com.example.smart_alarm_clock.R;
 import com.example.smart_alarm_clock.model.ListOfAlarmClock;
 
 import java.util.List;
 
 public class AdapterForListOfAlarmClock extends RecyclerView.Adapter<AdapterForListOfAlarmClock.AlarmClockViewHolder> {
-    public ListOfAlarmClock alarmClock;
 
-    private OnItemClickListener listener;                            //Работа с прослушивателем, чтобы переходить на другой фрагмент
+    private OnListener listener;                            //Работа с прослушивателем, чтобы переходить на другой фрагмент
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
+    public interface OnListener {
+        void onItemClick(int position, int alarmClockID);
+
+        void onActiveAlarmClockManager(ListOfAlarmClock listOfAlarmClock, int delayTechnology);
+
+        void onDisableAlarmClockManager(ListOfAlarmClock listOfAlarmClock);
+
+        void onAlarmClockUpdate(ListOfAlarmClock listOfAlarmClock);
+
+        int onSearchDelayAlarmClock();
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void OnListener(OnListener listener) {
         this.listener = listener;
     }
 
@@ -37,10 +42,9 @@ public class AdapterForListOfAlarmClock extends RecyclerView.Adapter<AdapterForL
         this.sortedList = new SortedList<>(ListOfAlarmClock.class, new SortedList.Callback<ListOfAlarmClock>() {
             @Override
             public int compare(ListOfAlarmClock o1, ListOfAlarmClock o2) {
-                if (o1.timeAlarmClockHour > o2.timeAlarmClockHour){
+                if (o1.timeAlarmClockHour > o2.timeAlarmClockHour) {
                     return 1;
-                }
-                else if (o1.timeAlarmClockHour == o2.timeAlarmClockHour && o1.timeAlarmClockMinute >= o2.timeAlarmClockMinute)
+                } else if (o1.timeAlarmClockHour == o2.timeAlarmClockHour && o1.timeAlarmClockMinute >= o2.timeAlarmClockMinute)
                     return 1;
                 else return -1;
             }
@@ -77,26 +81,23 @@ public class AdapterForListOfAlarmClock extends RecyclerView.Adapter<AdapterForL
         });
     }
 
-    public void setItems(List<ListOfAlarmClock> listOfAlarmClocks){
+    public void setItems(List<ListOfAlarmClock> listOfAlarmClocks) {
         sortedList.replaceAll(listOfAlarmClocks);
     }
 
     @NonNull
     @Override
     public AlarmClockViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_of_alarm_clock,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_of_alarm_clock, parent, false);
 
         return new AlarmClockViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AlarmClockViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (listener != null) {
-                    listener.onItemClick(position);
-                }
+        holder.itemView.setOnClickListener(view -> {
+            if (listener != null) {
+                listener.onItemClick(position, holder.alarmClock.alarmClock_ID);
             }
         });
         holder.bind(sortedList.get(position));
@@ -107,10 +108,12 @@ public class AdapterForListOfAlarmClock extends RecyclerView.Adapter<AdapterForL
         return sortedList.size();
     }
 
-    static class AlarmClockViewHolder extends RecyclerView.ViewHolder {
+    class AlarmClockViewHolder extends RecyclerView.ViewHolder {
 
         TextView alarmClock_time;
         SwitchCompat switchActiveAlarmClock;
+
+        int delayTechnology = listener.onSearchDelayAlarmClock();
 
         ListOfAlarmClock alarmClock;
         boolean silentUpdate;
@@ -118,24 +121,43 @@ public class AdapterForListOfAlarmClock extends RecyclerView.Adapter<AdapterForL
         public AlarmClockViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            alarmClock_time = itemView.findViewById(R.id.alarmClock_time);
-            switchActiveAlarmClock = itemView.findViewById(R.id.switchActiveAlarmClock);
+            alarmClock_time = itemView.findViewById(R.id.AlarmClock_time);
+            switchActiveAlarmClock = itemView.findViewById(R.id.SwitchActiveAlarmClock);
 
-            switchActiveAlarmClock.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (!silentUpdate){
-                        alarmClock.activeAlarmClock = isChecked;
-                        App.getInstance().getListOfAlarmClockDao().update(alarmClock);
+            switchActiveAlarmClock.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (!silentUpdate) {
+                    alarmClock.activeAlarmClock = isChecked;
+                    if (alarmClock.activeAlarmClock){
+                        listener.onActiveAlarmClockManager(alarmClock, delayTechnology);
                     }
+                    else{
+                        listener.onDisableAlarmClockManager(alarmClock);
+                    }
+                    listener.onAlarmClockUpdate(alarmClock);
                 }
             });
         }
 
-        public void bind(ListOfAlarmClock alarmClock){
+        public void bind(ListOfAlarmClock alarmClock) {
             this.alarmClock = alarmClock;
-            String time = alarmClock.timeAlarmClockHour + ":" + alarmClock.timeAlarmClockMinute;
+            String timeHour;
+            String timeMinute;
+            if (alarmClock.timeAlarmClockHour < 10)
+                timeHour = "0" + alarmClock.timeAlarmClockHour;
+            else
+                timeHour = "" + alarmClock.timeAlarmClockHour;
+            if (alarmClock.timeAlarmClockMinute < 10)
+                timeMinute = "0" + alarmClock.timeAlarmClockMinute;
+            else
+                timeMinute = "" + alarmClock.timeAlarmClockMinute;
+            String time = timeHour + ":" + timeMinute;
             alarmClock_time.setText(time);
+
+            if (!alarmClock.activeAlarmClock) {
+                listener.onDisableAlarmClockManager(alarmClock);
+            } else if (!alarmClock.activeRepeatAlarmClock){
+                listener.onActiveAlarmClockManager(alarmClock, delayTechnology);
+            }
 
             silentUpdate = true;
             switchActiveAlarmClock.setChecked(alarmClock.activeAlarmClock);
