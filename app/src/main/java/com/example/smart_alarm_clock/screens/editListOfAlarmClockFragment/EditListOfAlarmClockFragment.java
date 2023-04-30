@@ -55,6 +55,7 @@ public class EditListOfAlarmClockFragment extends Fragment {
 
         Calendar calendar = Calendar.getInstance();
 
+        //alarmClockId равен -1, если создается новый будильник
         if (alarmClockId==-1) {
             listOfAlarmClock = new ListOfAlarmClock();
         }

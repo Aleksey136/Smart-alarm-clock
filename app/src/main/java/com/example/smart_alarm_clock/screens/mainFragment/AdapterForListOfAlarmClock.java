@@ -18,7 +18,8 @@ import java.util.List;
 
 public class AdapterForListOfAlarmClock extends RecyclerView.Adapter<AdapterForListOfAlarmClock.AlarmClockViewHolder> {
 
-    private OnListener listener;                            //Работа с прослушивателем, чтобы переходить на другой фрагмент
+    //Работа с прослушивателем для выполнения действий, доступных только фрагменту
+    private OnListener listener;
 
     public interface OnListener {
         void onItemClick(int position, int alarmClockID);
@@ -36,6 +37,7 @@ public class AdapterForListOfAlarmClock extends RecyclerView.Adapter<AdapterForL
         this.listener = listener;
     }
 
+    //Создан для сортировки будильников по времени
     private SortedList<ListOfAlarmClock> sortedList;
 
     public AdapterForListOfAlarmClock() {
@@ -124,6 +126,7 @@ public class AdapterForListOfAlarmClock extends RecyclerView.Adapter<AdapterForL
             alarmClock_time = itemView.findViewById(R.id.AlarmClock_time);
             switchActiveAlarmClock = itemView.findViewById(R.id.SwitchActiveAlarmClock);
 
+            //Сервис включается или выключается при использовании переключателя
             switchActiveAlarmClock.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (!silentUpdate) {
                     alarmClock.activeAlarmClock = isChecked;

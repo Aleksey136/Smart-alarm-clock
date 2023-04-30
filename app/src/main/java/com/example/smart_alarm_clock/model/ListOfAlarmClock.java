@@ -8,6 +8,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity
 public class ListOfAlarmClock implements Parcelable {
     @PrimaryKey(autoGenerate = true)
@@ -64,7 +66,7 @@ public class ListOfAlarmClock implements Parcelable {
         if (timeAlarmClockMinute != that.timeAlarmClockMinute) return false;
         if (activeAlarmClock != that.activeAlarmClock) return false;
         if (activeRepeatAlarmClock != that.activeRepeatAlarmClock) return false;
-        return textAlarmClock != null ? textAlarmClock.equals(that.textAlarmClock) : that.textAlarmClock == null;
+        return Objects.equals(textAlarmClock, that.textAlarmClock);
     }
 
     @Override

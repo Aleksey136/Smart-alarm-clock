@@ -66,6 +66,7 @@ public class ActiveAlarmClockFragment extends Fragment {
             if (ringtone != null) {
                 player.stop();
 
+                //Добавление опоздания при отложенном будильнике
                 if (repeatAlarmClock) {
                     Calendar calendar = Calendar.getInstance();
                     ListOfAlarmClock alarmClock = activeAlarmClockFragmentViewModel.getAlarmClockById(alarmClockId);
@@ -77,6 +78,7 @@ public class ActiveAlarmClockFragment extends Fragment {
                     activeAlarmClockFragmentViewModel.insertNewLateness(lateness);
                 }
 
+                //Отображение пользователю выключенного будильника
                 ListOfAlarmClock listOfAlarmClock = activeAlarmClockFragmentViewModel.getAlarmClockById(alarmClockId);
                 listOfAlarmClock.activeAlarmClock = false;
                 activeAlarmClockFragmentViewModel.saveEditAlarmClock(listOfAlarmClock);
@@ -90,6 +92,7 @@ public class ActiveAlarmClockFragment extends Fragment {
             calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + 1);
             setAlarmClockManager(calendar, alarmClockId);
 
+            //Отображение пользователю включенного будильника, но являющегося отложенным
             ListOfAlarmClock listOfAlarmClock = activeAlarmClockFragmentViewModel.getAlarmClockById(alarmClockId);
             listOfAlarmClock.activeAlarmClock = true;
             listOfAlarmClock.activeRepeatAlarmClock = true;

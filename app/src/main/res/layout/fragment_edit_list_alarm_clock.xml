@@ -62,7 +62,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/DescriptionAlarmClock" />
+            app:layout_constraintTop_toBottomOf="@+id/DescriptionAlarmClock"
+            android:backgroundTint="@color/red"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

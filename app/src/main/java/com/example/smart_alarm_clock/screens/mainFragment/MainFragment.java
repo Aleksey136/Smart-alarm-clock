@@ -17,7 +17,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDeepLinkBuilder;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +33,7 @@ public class MainFragment extends Fragment implements AdapterForListOfAlarmClock
 
     private FragmentMainBinding binding;
 
+    //При нажатии на элемент списка запускается другой фрагмент
     @Override
     public void onItemClick(int position, int alarmClockID) {
         MainFragmentDirections.ActionMainFragmentToEditListOfAlarmClockFragment directions;
@@ -42,6 +42,7 @@ public class MainFragment extends Fragment implements AdapterForListOfAlarmClock
         NavHostFragment.findNavController(this).navigate(directions);
     }
 
+    //Установка будильника на нужное время с учетом времени опоздания
     @Override
     public void onActiveAlarmClockManager(ListOfAlarmClock listOfAlarmClock, int delayTechnology) {
         int delayHour = delayTechnology/60;
@@ -59,6 +60,7 @@ public class MainFragment extends Fragment implements AdapterForListOfAlarmClock
         setAlarmClockManager(calendar, listOfAlarmClock.alarmClock_ID);
     }
 
+    //Выключение будильника
     @Override
     public void onDisableAlarmClockManager(ListOfAlarmClock listOfAlarmClock) {
         AlarmManager alarmManager = (AlarmManager) requireActivity().getSystemService(Context.ALARM_SERVICE);
@@ -71,6 +73,7 @@ public class MainFragment extends Fragment implements AdapterForListOfAlarmClock
         mainFragmentViewModel.updateAlarmClock(listOfAlarmClock);
     }
 
+    //Ищет среднее время опоздания
     @Override
     public int onSearchDelayAlarmClock() {
         MainFragmentViewModel mainFragmentViewModel = new ViewModelProvider(this).get(MainFragmentViewModel.class);
@@ -108,8 +111,6 @@ public class MainFragment extends Fragment implements AdapterForListOfAlarmClock
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),
                 RecyclerView.VERTICAL, false);
         binding.ListOfAlarmClock.setLayoutManager(linearLayoutManager);
-        binding.ListOfAlarmClock.addItemDecoration(new DividerItemDecoration(requireContext(),
-                DividerItemDecoration.VERTICAL));
 
         AdapterForListOfAlarmClock adapter = new AdapterForListOfAlarmClock();
         binding.ListOfAlarmClock.setAdapter(adapter);

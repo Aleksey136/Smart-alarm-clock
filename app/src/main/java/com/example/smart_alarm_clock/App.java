@@ -14,7 +14,7 @@ public class App extends Application {
     private ListOfAlarmClockDao listOfAlarmClockDao;
     private ListOfLatenessDao listOfLatenessDao;
 
-    private static App instance;                                        //singleton - стоит ли использовать?
+    private static App instance;                                        //singleton
 
     public static App getInstance(){
         return instance;
@@ -28,7 +28,7 @@ public class App extends Application {
 
         database = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-db")
-                .allowMainThreadQueries()                           //Главный поток -> Бэк поток?
+                .allowMainThreadQueries()
                 .build();
 
         listOfAlarmClockDao = database.listOfAlarmClockDao();

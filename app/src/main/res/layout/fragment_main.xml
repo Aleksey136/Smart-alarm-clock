@@ -12,7 +12,8 @@
         android:id="@+id/ListOfAlarmClock"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_behavior="@string/appbar_scrolling_view_layout_behavior" />
+        tools:layout_behavior="@string/appbar_scrolling_view_layout_behavior"
+        android:clipToPadding="false"/>
 
     <Button
         android:id="@+id/ButtonAddAlarmClock"

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Вставайте!"
-        android:textSize="45dp"
+        android:textSize="45sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,10 +38,12 @@
         android:minWidth="128dp"
         android:minHeight="69dp"
         android:text="Отложить\nна 1 минуту"
+        android:textColor="@color/black"
+        android:backgroundTint="#FFE5E5E5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TextOutAlarmClock"
-        app:layout_constraintVertical_bias="0.700" />
+        app:layout_constraintVertical_bias="0.700"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

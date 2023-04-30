@@ -18,7 +18,8 @@ import java.util.List;
 public class AdapterForListOfLateness extends RecyclerView.Adapter<AdapterForListOfLateness.LatenessViewHolder> {
     public ListOfLateness lateness;
 
-    private AdapterForListOfLateness.OnListener listener;                            //Работа с прослушивателем, чтобы переходить на другой фрагмент
+    //Работа с прослушивателем для выполнения действий, доступных только фрагменту
+    private AdapterForListOfLateness.OnListener listener;
 
     public interface OnListener {
         void onItemClick(int position, int alarmClock_id);
@@ -28,6 +29,7 @@ public class AdapterForListOfLateness extends RecyclerView.Adapter<AdapterForLis
         this.listener = listener;
     }
 
+    //Создан для сортировки опозданий от большего времени к меньшему
     private SortedList<ListOfLateness> sortedList;
 
     public AdapterForListOfLateness() {

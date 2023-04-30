@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +24,7 @@ public class ListOfLatenessFragment extends Fragment implements AdapterForListOf
 
     private FragmentListOfLatenessBinding binding;
 
+    //При нажатии на элемент списка запускается другой фрагмент
     @Override
     public void onItemClick(int position, int lateness_Id) {
         ListOfLatenessFragmentDirections.ActionListOfLatenessFragmentToEditListOfLatenessFragment direction;
@@ -49,8 +49,6 @@ public class ListOfLatenessFragment extends Fragment implements AdapterForListOf
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),
                 RecyclerView.VERTICAL, false);
         binding.ListOfLateness.setLayoutManager(linearLayoutManager);
-        binding.ListOfLateness.addItemDecoration(new DividerItemDecoration(requireContext(),
-                DividerItemDecoration.VERTICAL));
 
         AdapterForListOfLateness adapter = new AdapterForListOfLateness();
         binding.ListOfLateness.setAdapter(adapter);
@@ -68,6 +66,7 @@ public class ListOfLatenessFragment extends Fragment implements AdapterForListOf
         SwitchCompat switchActiveTechnology = binding.SwitchActiveTechnology;
         ListOfLateness lateness;
 
+        //Если существует хоть 1 опоздание, можно включить технологию опозданий
         if (!listOfLatenessFragmentViewModel.getListLateness().isEmpty()) {
             lateness = listOfLatenessFragmentViewModel.getListLateness().get(0);
             switchActiveTechnology.setChecked(lateness.technologyLateness);

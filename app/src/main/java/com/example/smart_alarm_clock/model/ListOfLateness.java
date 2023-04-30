@@ -8,6 +8,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity
 public class ListOfLateness implements Parcelable {
     @PrimaryKey(autoGenerate = true)
@@ -59,7 +61,7 @@ public class ListOfLateness implements Parcelable {
         if (timeLatenessHour != that.timeLatenessHour) return false;
         if (timeLatenessMinute != that.timeLatenessMinute) return false;
         if (technologyLateness != that.technologyLateness) return false;
-        return textLateness != null ? textLateness.equals(that.textLateness) : that.textLateness == null;
+        return Objects.equals(textLateness, that.textLateness);
     }
 
     @Override
